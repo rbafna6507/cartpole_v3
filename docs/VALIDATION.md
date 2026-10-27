@@ -23,3 +23,12 @@ NumPy 2.5.4. Optional RL smoke: Torch 2.14.1, stable-baselines3 2.9.0.
 Raw smoke outputs remain ignored under runs/. Commands and rollout performance
 are in [SDK_QUICKSTART.md](SDK_QUICKSTART.md). No physical hardware motion,
 firmware flash, remote submission or graphical window was used.
+
+## Published checkout verification
+
+The initial public commit also passed the Linux/Python 3.11 offline workflow:
+[GitHub Actions run](https://github.com/rbafna6507/cartpole_v3/actions/runs/40536459189).
+A separate fresh clone of the public repository installed successfully on macOS
+with Python 3.11.7 and `uv sync --locked --extra sim`. Neither check depends on
+the original v2 environment. The production portal was checked after deployment
+and contains the new developer quick-start link.

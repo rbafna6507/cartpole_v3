@@ -3,8 +3,8 @@
 Run from this checkout with Python 3.11+ and uv. These commands were tested on
 macOS arm64 with Python 3.12.11 on 2026-10-27. They perform no hardware motion.
 
-Install uv with `pipx install uv` if it is not already available, clone this
-repository and enter it:
+Install uv using its [official installation instructions](https://docs.astral.sh/uv/getting-started/installation/)
+(or `pipx install uv` if pipx is already installed), then clone this repository:
 
 ```sh
 git clone https://github.com/rbafna6507/cartpole_v3.git
