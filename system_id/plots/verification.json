@@ -1,0 +1,57 @@
+{
+  "hashes_verified": 13,
+  "passive_scores_reproduced": [
+    {
+      "episode": "left_nominal30",
+      "samples": 1525,
+      "rmse_rad": 0.051062625823078474,
+      "p95_rad": 0.11302940970486483
+    },
+    {
+      "episode": "right_nominal60",
+      "samples": 2085,
+      "rmse_rad": 0.06655290962589702,
+      "p95_rad": 0.11251908109262052
+    },
+    {
+      "episode": "left_nominal60",
+      "samples": 1945,
+      "rmse_rad": 0.13570162408186168,
+      "p95_rad": 0.2317156891789463
+    }
+  ],
+  "pulse_checks": [
+    {
+      "run": "pos10-short",
+      "rows": 468,
+      "duplicate_timestamps": 1
+    },
+    {
+      "run": "neg10-short",
+      "rows": 468,
+      "duplicate_timestamps": 0
+    },
+    {
+      "run": "pos20-short",
+      "rows": 467,
+      "duplicate_timestamps": 0
+    },
+    {
+      "run": "neg20-short",
+      "rows": 468,
+      "duplicate_timestamps": 1
+    },
+    {
+      "run": "pos30-validation",
+      "rows": 468,
+      "duplicate_timestamps": 1
+    },
+    {
+      "run": "neg30-validation",
+      "rows": 467,
+      "duplicate_timestamps": 1
+    }
+  ],
+  "physical_model_accepted": false,
+  "scope": "Stored predictions and numeric telemetry only; original fitter and simulator are not re-executed."
+}

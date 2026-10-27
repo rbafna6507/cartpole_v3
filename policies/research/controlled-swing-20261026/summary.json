@@ -1,0 +1,139 @@
+{
+  "best_overall_step": 0,
+  "best_trained_step": 25600,
+  "checkpoint_count": 41,
+  "completed_steps": 1024000,
+  "evaluation_limit": "Four repeated development cases; no reserved-seed confirmation",
+  "exports": [
+    {
+      "changed_runtime_file": "rig/neural_runner.py",
+      "checkpoint_sha256": "48910dc996b7577196065dc41fc3da47531e51e6590105bad33714f77ef29928",
+      "controlled_swing_qualified": false,
+      "hardware_accepted": false,
+      "metrics": {
+        "nominal": {
+          "by_start": {
+            "hanging": {
+              "controlled_successes": 0,
+              "episodes": 2,
+              "faults": 0,
+              "holds": 0
+            },
+            "upright": {
+              "controlled_successes": 2,
+              "episodes": 2,
+              "faults": 0,
+              "holds": 2
+            }
+          },
+          "full_rotation_excursions": 2,
+          "mean_score": -0.05946984502715191,
+          "physical_faults": 0
+        },
+        "randomized": {
+          "by_start": {
+            "hanging": {
+              "controlled_successes": 0,
+              "episodes": 2,
+              "faults": 0,
+              "holds": 0
+            },
+            "upright": {
+              "controlled_successes": 1,
+              "episodes": 2,
+              "faults": 0,
+              "holds": 1
+            }
+          },
+          "full_rotation_excursions": 2,
+          "mean_score": -0.18516882463195017,
+          "physical_faults": 0
+        }
+      },
+      "migrated_actor_file_sha256": "514d6c36415cdb8be1c6c8fbc7b3e388258a3ce047e4ef62c8cc5b6324fc49fc",
+      "migration_scope": "Only scoped console rail compatibility tolerance; inference and default 1 mm tolerance unchanged; no override enabled by this export",
+      "new_runtime_sha256": "5a93bdd874840f3ed6c717281f29cb81c206dc7817db9e2d76fe8e441b71107c",
+      "old_runtime_sha256": "fa920d5434f5777cb9090d6a4e8a36740ab83c80d4a8337e456ef6c5c36d7262",
+      "original_actor_file_sha256": "9b97f9718f103afbd0e0670a196bedf6e604255775457c97bdb66cfe671f9bbd",
+      "parity": {
+        "absolute_tolerance_m_s2": 1e-05,
+        "max_absolute_error_m_s2": 3.2511267775703345e-06,
+        "observations": 1296,
+        "passed": true,
+        "scope": "Deterministic encoded actor inference only; no sensor pipeline, transport, timing or hardware qualification"
+      },
+      "schema": "controlled-research-migration-v1",
+      "status": "RESEARCH_ONLY_NOT_QUALIFIED",
+      "step": 25600,
+      "weights_exactly_match_pytorch_checkpoint": true,
+      "weights_exactly_unchanged": true
+    },
+    {
+      "changed_runtime_file": "rig/neural_runner.py",
+      "checkpoint_sha256": "009f95501365870c44141ad35b6e60ddac3af0b2534f238fff020b8ee5169bb9",
+      "controlled_swing_qualified": false,
+      "hardware_accepted": false,
+      "metrics": {
+        "nominal": {
+          "by_start": {
+            "hanging": {
+              "controlled_successes": 0,
+              "episodes": 2,
+              "faults": 0,
+              "holds": 0
+            },
+            "upright": {
+              "controlled_successes": 2,
+              "episodes": 2,
+              "faults": 0,
+              "holds": 2
+            }
+          },
+          "full_rotation_excursions": 2,
+          "mean_score": -0.05989199010889268,
+          "physical_faults": 0
+        },
+        "randomized": {
+          "by_start": {
+            "hanging": {
+              "controlled_successes": 0,
+              "episodes": 2,
+              "faults": 0,
+              "holds": 0
+            },
+            "upright": {
+              "controlled_successes": 0,
+              "episodes": 2,
+              "faults": 0,
+              "holds": 0
+            }
+          },
+          "full_rotation_excursions": 1,
+          "mean_score": 0.881679951095738,
+          "physical_faults": 0
+        }
+      },
+      "migrated_actor_file_sha256": "e9849d4f2e37afdafd5d7351960f2779774f9e40acfa4cd23f8bc482d277af18",
+      "migration_scope": "Only scoped console rail compatibility tolerance; inference and default 1 mm tolerance unchanged; no override enabled by this export",
+      "new_runtime_sha256": "5a93bdd874840f3ed6c717281f29cb81c206dc7817db9e2d76fe8e441b71107c",
+      "old_runtime_sha256": "fa920d5434f5777cb9090d6a4e8a36740ab83c80d4a8337e456ef6c5c36d7262",
+      "original_actor_file_sha256": "5907004c1cb799c753ef56b4ddc90c49553d21d8632e4501d4fc5ddc82e1b156",
+      "parity": {
+        "absolute_tolerance_m_s2": 1e-05,
+        "max_absolute_error_m_s2": 3.2022727403102635e-06,
+        "observations": 1296,
+        "passed": true,
+        "scope": "Deterministic encoded actor inference only; no sensor pipeline, transport, timing or hardware qualification"
+      },
+      "schema": "controlled-research-migration-v1",
+      "status": "RESEARCH_ONLY_NOT_QUALIFIED",
+      "step": 1024000,
+      "weights_exactly_match_pytorch_checkpoint": true,
+      "weights_exactly_unchanged": true
+    }
+  ],
+  "hanging_evaluations": 164,
+  "hanging_successes": 0,
+  "hardware_accepted": false,
+  "qualified": false
+}

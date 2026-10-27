@@ -1,0 +1,207 @@
+{
+  "schema_version": 1,
+  "scope": "Documented hardware/configuration snapshot; no live inspection, flashing or motion performed. Unknown quantities remain null.",
+  "status_vocabulary": {
+    "configured": "Software or wiring-design setting; not independently measured",
+    "owner_confirmed": "Historical owner observation/specification reported in source",
+    "fitted": "Conditional inference from recorded data; not accepted global plant",
+    "assumed": "Unverified modeling/configuration assumption",
+    "unknown": "No defensible measurement in curated evidence"
+  },
+  "source_excerpts": "system_id/sources/hardware-excerpts.md",
+  "controller": {
+    "model": {
+      "value": "Teensy 4.1",
+      "unit": null,
+      "status": "configured",
+      "source": "docs/pcb-switches.md",
+      "uncertainty": "As-built revision not inspected"
+    },
+    "pin_numbering": "Teensy digital GPIO, not connector pad numbers",
+    "pins": {
+      "cart_step": 2,
+      "cart_dir": 3,
+      "left_z_step": 4,
+      "left_z_dir": 5,
+      "right_z_step": 6,
+      "right_z_dir": 7,
+      "shared_enable": 8,
+      "encoder_sda": 17,
+      "encoder_scl": 16,
+      "left_limit": 26,
+      "right_limit": 27,
+      "reserved_z_limits": [
+        28,
+        29
+      ]
+    },
+    "pins_status": "configured",
+    "pins_sources": [
+      "firmware/teensy_executor/teensy_executor.ino:27-36",
+      "docs/pcb-switches.md:7-35"
+    ],
+    "enable": {
+      "active_level": "LOW",
+      "shared_all_three_drivers": true,
+      "source": "docs/pcb-switches.md:22",
+      "reset_high_impedance_fail_safe_verified": false
+    }
+  },
+  "cart": {
+    "drive": "Big Easy Driver; belt and pulley",
+    "motor_full_steps_per_rev": {
+      "value": 200,
+      "unit": "steps/rev",
+      "status": "configured",
+      "source": "firmware/teensy_executor/cart_mechanics.h:6",
+      "uncertainty": "Motor step angle not independently inspected"
+    },
+    "microsteps": {
+      "value": 16,
+      "unit": "microsteps/full_step",
+      "status": "configured",
+      "source": "firmware/teensy_executor/cart_mechanics.h:6",
+      "uncertainty": "Driver settings not physically verified"
+    },
+    "pulley_teeth": {
+      "value": 60,
+      "unit": "teeth",
+      "status": "configured",
+      "source": "firmware/teensy_executor/cart_mechanics.h:6",
+      "uncertainty": "No dimensional metrology"
+    },
+    "belt_pitch": {
+      "value": 2,
+      "unit": "mm",
+      "status": "configured",
+      "source": "firmware/teensy_executor/cart_mechanics.h:7",
+      "uncertainty": "Nominal GT2 geometry"
+    },
+    "steps_per_m": {
+      "value": 26666.666666666668,
+      "unit": "steps/m",
+      "status": "configured",
+      "source": "firmware/teensy_executor/cart_mechanics.h:19",
+      "uncertainty": "Derived pulse scale, not independent physical displacement"
+    },
+    "position_feedback": "Issued pulse counts; no independent linear encoder",
+    "mass_kg": null,
+    "force_limit_N": null,
+    "physical_stroke_m": null,
+    "unknown_reason": "These measurements do not identify mass, force authority, missed steps or independently calibrated rail length."
+  },
+  "pendulum": {
+    "encoder": {
+      "value": "AS5600",
+      "unit": null,
+      "status": "configured",
+      "source": "firmware/teensy_executor/teensy_executor.ino:256-263",
+      "uncertainty": "No fresh sensor inspection"
+    },
+    "encoder_counts_per_rev": 4096,
+    "i2c_address": "0x36",
+    "i2c_clock_Hz": 400000,
+    "mass_kg": null,
+    "physical_length_m": null,
+    "center_of_mass_m": null,
+    "inertia_kg_m2": null,
+    "effective_length": {
+      "value": 0.16073596568158666,
+      "unit": "m",
+      "status": "fitted",
+      "source": "system_id/fits/passive-frozen.json",
+      "uncertainty": "Conditional passive candidate; fresh repeatability p95 fails. Effective length is not geometric rod length."
+    },
+    "angular_damping": {
+      "value": 0.4631556778357131,
+      "unit": "1/s",
+      "status": "fitted",
+      "source": "system_id/fits/passive-frozen.json",
+      "uncertainty": "Viscous-model inference; not hinge torque damping"
+    },
+    "local_angle_offset": {
+      "value": -0.11310915597373176,
+      "unit": "rad",
+      "status": "fitted",
+      "source": "system_id/fits/passive-frozen.json",
+      "uncertainty": "Local hanging-region phase only; not global calibration"
+    }
+  },
+  "vertical": {
+    "driver": {
+      "value": "Big Easy Driver",
+      "unit": null,
+      "status": "owner_confirmed",
+      "source": "docs/VERTICAL_CONTROL.md:18-22",
+      "uncertainty": "Historical installation description"
+    },
+    "motor": {
+      "value": "NEMA 17",
+      "unit": null,
+      "status": "owner_confirmed",
+      "source": "docs/VERTICAL_COMMISSIONING.md:35-38",
+      "uncertainty": "Frame designation does not establish step angle or torque"
+    },
+    "stroke": {
+      "value": 200,
+      "unit": "mm",
+      "status": "owner_confirmed",
+      "source": "docs/VERTICAL_CONTROL.md:18",
+      "uncertainty": "Not independently measured here"
+    },
+    "configured_max_height": {
+      "value": 120,
+      "unit": "mm",
+      "status": "configured",
+      "source": "docs/VERTICAL_CONTROL.md:35-37",
+      "uncertainty": "Firmware default; RAM setting may differ on live rig"
+    },
+    "lead": {
+      "value": 5,
+      "unit": "mm/rev",
+      "status": "assumed",
+      "source": "docs/VERTICAL_COMMISSIONING.md:35-38",
+      "uncertainty": "Supplied 5 mm pitch interpreted as travel/revolution; multi-start lead must be verified"
+    },
+    "motor_full_steps_per_rev": {
+      "value": 200,
+      "unit": "steps/rev",
+      "status": "assumed",
+      "source": "docs/VERTICAL_CONTROL.md:19-22",
+      "uncertainty": "NEMA17 does not establish 1.8 degree step angle"
+    },
+    "microsteps": {
+      "value": 16,
+      "unit": "microsteps/full_step",
+      "status": "assumed",
+      "source": "docs/VERTICAL_CONTROL.md:19-22",
+      "uncertainty": "Big Easy Driver unconnected default; physical setting not inspected"
+    },
+    "steps_per_mm": {
+      "value": 640,
+      "unit": "steps/mm",
+      "status": "configured",
+      "source": "200*16/5",
+      "uncertainty": "Conditional on motor angle, driver mode and screw lead"
+    },
+    "raw_positive_direction": {
+      "left": "down",
+      "right": "up",
+      "status": "owner_confirmed",
+      "source": "docs/VERTICAL_CONTROL.md:6-8",
+      "observed_date": "2026-10-23"
+    },
+    "up_dir_level": {
+      "left": "LOW",
+      "right": "HIGH"
+    },
+    "feedback": "Issued pulse counts only; no commissioned encoder, limit contact or stall sensor",
+    "reference": "Operator assertion of physical bottom; timed bottoming is not sensed homing"
+  },
+  "measurement_limitations": [
+    "No physical measurements were taken for this repository creation.",
+    "Pulse-governor acceleration is command-domain telemetry, not an accelerometer measurement.",
+    "Masses, inertia, motor torque and force limits remain unknown; simulation values must be explicit assumptions.",
+    "No accepted system-identification model is supplied for hardware RL transfer."
+  ]
+}

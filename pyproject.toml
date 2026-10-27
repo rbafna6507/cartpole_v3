@@ -1,0 +1,50 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cartpole-sdk"
+version = "0.2.0"
+description = "Cartpole SDK with source-explicit policies, firmware reference and optional MuJoCo simulation"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.scripts]
+cartpole-id = "cartpole_sdk.identification.cli:main"
+cartpole-vision = "cartpole_vision.live:main"
+cartpole-v2 = "cartpole_sdk.cli:main"
+cartpole = "cartpole_sdk.rig.operator:main"
+cartpole-console = "cartpole_sdk.rig.operator:main"
+cartpole-view-policy = "cartpole_sdk.sim.policy_viewer:launch"
+cartpole-v2-view = "cartpole_sdk.sim.viewer:launch"
+cartpole-portal = "cartpole_sdk.portal.server:main"
+cartpole-worker = "cartpole_sdk.portal.worker:main"
+cartpole-portal-dev = "cartpole_sdk.portal.dev:main"
+cartpole-collect = "cartpole_sdk.sensing.collect:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[project.optional-dependencies]
+vision = ["Flask>=3,<4", "numpy>=1.26,<3", "opencv-python-headless>=4.8,<5"]
+hardware = ["pyserial>=3.5,<4"]
+id = ["numpy>=1.26,<3"]
+inference = ["numpy>=1.26,<3"]
+sim = ["mujoco>=3.15,<4", "gymnasium>=1.0,<2", "numpy>=1.26,<3"]
+rl = ["mujoco>=3.15,<4", "gymnasium>=1.0,<2", "numpy>=1.26,<3", "stable-baselines3>=2.7,<3", "torch>=2.8,<3"]
+plots = ["matplotlib>=3.8,<4"]
+
+[tool.setuptools.package-data]
+cartpole_vision = ["*.html", "*.js"]
+cartpole_sdk = ["control/*.json", "sim/*.json", "sim/*.xml", "portal/web/*.html", "portal/web/*.js", "portal/web/*.css"]
+
+[tool.uv]
+default-groups = ["dev", "operator"]
+
+[dependency-groups]
+operator = ["pyserial>=3.5,<4", "numpy>=1.26,<3"]
+dev = ["pytest>=8,<10"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

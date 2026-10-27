@@ -1,0 +1,14 @@
+{
+  "content_sha256": "0a5305e6ab01c9457a104e2667540562706fb3ab46ce31c8b949b022c627c387",
+  "files_sha256": {
+    "executor-parameters.json": "63eb0134e775ed29ef11b5eb38c486e4923079675c970f7118388538a3b19a29",
+    "model.json": "240541df813b52bb16f9db3b0904e9cf0a3fd17a594eaf45abe7e33283d1ada0",
+    "observation-config.json": "49e34b293458840435fb78c50f23db3cff4681c848fb00e9057a3edcea0fe686",
+    "prior-parameters.json": "b9b12e9af2873e53f9bbe2d7301d3f6ea053151e813546f0d4d1e055429e5325",
+    "provenance.json": "67e40967916ab7f8862c6a603c06df159781dd19c8d6d9e44fabae78cbf423e3",
+    "randomization.json": "d5ef5f31439cfe12bd0e35ddd7089f2da97b4e6ca4d31645186f8614340353e8"
+  },
+  "hardware_accepted": false,
+  "schema": "cartpole-evidence-training-bundle-v1",
+  "status": "DEVELOPMENT_ONLY"
+}

@@ -1,0 +1,97 @@
+{
+  "scope": "Independent new passive release assessment of exact frozen Oct16 candidate; no retuning or model promotion",
+  "parameters_refitted": false,
+  "frozen_parameters": {
+    "effective_length_m": 0.16073596568158666,
+    "gravity_coefficient_per_s2": 61.03176696268046,
+    "angular_damping_per_s": 0.4631556778357131,
+    "coulomb_rad_per_s2": 0.0,
+    "angle_offset_rad": -0.11310915597373176,
+    "linear_coefficients": [
+      60.64177253375597,
+      0.4631556778357131,
+      6.8885413950367065
+    ]
+  },
+  "local_phase_offset_rad": -0.11310915597373176,
+  "independent_global_angle_calibration": false,
+  "physical_cart_stationarity_certified": false,
+  "recommended_for_hardware_rl": false,
+  "caveats": [
+    "Operator hand restraint remains an assumption; counted position or pixel stability cannot certify metric stationarity.",
+    "Fitted Oct16 local gravity phase is reused unchanged, not an independent global encoder calibration.",
+    "Half-second forecasts reinitialize from past raw angles; continuous rollouts initialize only once after~0.1s.",
+    "Nominal episode angle labels are operator instructions, not calibrated measured amplitudes.",
+    "Plots choose an integer 2pi raw-angle display branch only; no fitted zero or phase is removed from recorded measurements."
+  ],
+  "uncertainty": {
+    "coefficient_standard_errors": [
+      1.1851291996068387,
+      0.15540560236838613,
+      0.4504568763662718
+    ],
+    "method": "conditional OLS weak-window covariance"
+  },
+  "short_forecast_validation": {
+    "prediction_windows": 43,
+    "prediction_samples": 5375,
+    "prediction_rmse_rad": 0.07519780517953448,
+    "prediction_p95_rad": 0.1711064421774729,
+    "integral_nrmse": 0.10128912743104401,
+    "weak_window_count": 62,
+    "angle_span_rad": 2.049398307179586
+  },
+  "fixed_gates_pass": false,
+  "continuous_rollouts": [
+    {
+      "episode_id": "left_nominal30",
+      "initial_t_s": 74.2,
+      "initial_raw_angle_rad": -3.3670873071795864,
+      "initial_omega_rad_s": -5.588125482604797,
+      "duration_s": 6.099999999999994,
+      "samples": 1525,
+      "rmse_rad": 0.05106262582307845,
+      "p95_rad": 0.11302940970486479,
+      "scope": "One initial condition, past11 angles over40ms at250Hz; continuous diagnostic after~0.1s prefix. Fixed cart and local phase assumed, no acceptance gate."
+    },
+    {
+      "episode_id": "right_nominal60",
+      "initial_t_s": 85.16,
+      "initial_raw_angle_rad": 3.3456123071795862,
+      "initial_omega_rad_s": 8.241666648854665,
+      "duration_s": 8.340000000000003,
+      "samples": 2085,
+      "rmse_rad": 0.06655290962589702,
+      "p95_rad": 0.11251908109262056,
+      "scope": "One initial condition, past11 angles over40ms at250Hz; continuous diagnostic after~0.1s prefix. Fixed cart and local phase assumed, no acceptance gate."
+    },
+    {
+      "episode_id": "left_nominal60",
+      "initial_t_s": 100.92,
+      "initial_raw_angle_rad": -3.7720583071795852,
+      "initial_omega_rad_s": -5.181900932401684,
+      "duration_s": 7.780000000000001,
+      "samples": 1945,
+      "rmse_rad": 0.13570162408186168,
+      "p95_rad": 0.23171568917894617,
+      "scope": "One initial condition, past11 angles over40ms at250Hz; continuous diagnostic after~0.1s prefix. Fixed cart and local phase assumed, no acceptance gate."
+    }
+  ],
+  "camera_geometry": [
+    {
+      "episode_id": "left_nominal30",
+      "coverage": 0.8134110787172012,
+      "max_gap_s": 0.08814850100316107
+    },
+    {
+      "episode_id": "right_nominal60",
+      "coverage": 0.8215859030837004,
+      "max_gap_s": 0.1377066450077109
+    },
+    {
+      "episode_id": "left_nominal60",
+      "coverage": 0.8863636363636364,
+      "max_gap_s": 0.0750568329822272
+    }
+  ]
+}

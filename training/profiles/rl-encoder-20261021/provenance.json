@@ -1,0 +1,77 @@
+{
+  "angle_source": "raw",
+  "assumptions": {
+    "acceleration_servo_input_gain": 1.0,
+    "angle_noise_std": 0.001,
+    "cart_damping": 0.05,
+    "cart_mass_kg": 0.35,
+    "command_delay_steps": 1,
+    "max_force_n": 20.0,
+    "physical_input_delay_s": 0.0,
+    "pole_mass_kg": 0.02275,
+    "telemetry_delay_steps": 3
+  },
+  "encoder_calibration_accepted": false,
+  "executor_source": "evidence/swingup-resonance-20261021/stopped-readback.json",
+  "hardware_accepted": false,
+  "limitations": [
+    "Frozen batch-6 passive coefficients are retained from the source profile; no physical refit or fit acceptance is claimed.",
+    "Passive decays identify angular ratios. Cart/pole masses, cart damping and 20 N force authority remain assumptions.",
+    "Ideal acceleration-servo gain and tracking, physical delay, backlash, slip and missed steps remain unidentified.",
+    "The full-angle encoder curve failed held-out upright and freefall checks; no nominal global correction is applied.",
+    "Encoder, friction, length, noise and transport ranges are engineering stress coverage, not a statistical posterior.",
+    "The camera alone moved between native trial groups; their image-vertical angles are different view epochs, not evidence of encoder drift.",
+    "The readback was motor-disabled with fault 4 and invalid homing. Recorded settings do not establish a presently healthy or homed rig.",
+    "One-way transport delays are assumed. Host dispatch stalls and the 20 ms lease require separate fault evaluation.",
+    "Post-tightening friction, full-speed physical cart tracking, global swing-up/balance prediction and hardware transfer remain unqualified.",
+    "Smooth dry friction requires MujocoBackend; generated MJCF alone omits its applied torque."
+  ],
+  "nominal_encoder_correction_applied": false,
+  "physical_parameter_changes": {
+    "rail_half_m": {
+      "new": 0.309074998,
+      "old": 0.309000015
+    }
+  },
+  "prior_semantics": "HostPolicyParameters.from_controller maps recorded controller settings; its effective length is independent of the passive plant length.",
+  "randomization_semantics": "Independent bounded per-episode engineering draws. Nominal encoder law is identity; simulated sensor distortion precedes quantization and the magnetic observer.",
+  "recorded_executor_state": {
+    "encoder_upright_raw": 533,
+    "fault": 4,
+    "home_epoch": 31,
+    "live_health_or_homing_qualification": false,
+    "measured_span_steps": 16511,
+    "mode": 4,
+    "motor_enabled": false
+  },
+  "retained_passive_parameters": {
+    "angular_damping_per_s": 0.006891975341585199,
+    "coulomb_rad_per_s2": 1.6268943123178277,
+    "effective_length_m": 0.16030387335574306,
+    "friction_velocity_scale_rad_s": 0.05
+  },
+  "schema": "cartpole-evidence-training-provenance-v1",
+  "source_accepted": false,
+  "source_of_camera_movement_clarification": "User reported only the camera moved; preserved campaign README predates this clarification.",
+  "source_profile": "training/profiles/rl-encoder-20261020",
+  "sources_sha256": {
+    "evidence/encoder-map-repeat-20261021/README.md": "65ccb291e465cdf8b3486d7a7e3ffcd7cdde1d8e0e8c350af705d8bf83731db8",
+    "evidence/friction-gym-20261017/README.md": "78d8c7e351d240c04c4a6cf6430caf1a6df0f08d168f5b275a947619165cd212",
+    "evidence/friction-gym-20261017/cart-dynamics/README.md": "15013e444e3a489616496132a6a57b8fc5777d485e9c1b49ca26995202d97eed",
+    "evidence/passive-batches8-9-20261017/README.md": "e6854aa932d2f832dfe9eb8a29460d8232c06bb27557e6667a29bdd0127f7a56",
+    "evidence/passive-refinement-20261017/README.md": "de318a8007e5611c353fb85e7fa5a4605b807ee404a58a6dda783c857e63a48f",
+    "evidence/swingup-resonance-20261021/README.md": "a1d3c6a333929431629d5dfa5028365a417d4c1853417ffacc9dc434c7e152a0",
+    "evidence/swingup-resonance-20261021/stopped-readback.json": "aef0d7b4d9c52d0e65aaf120e25ff337a326840727b60556181f9b7180551fad",
+    "evidence/system-id-20261020/README.md": "a3f35818cad28eabb4737c82a484bfe163d3eb71cb91a0f058f0f20a98ca9b27",
+    "evidence/system-id-20261020/driven-combined-v1/report.md": "5ae4519600780f5565f1cacbaa5465bbff06fdb3f0888884c3ce8176bc92ce67",
+    "evidence/system-id-20261020/timing-gc-comparison-v3/README.md": "79f8b792718632f9f1c3f39310845fdd6b63c3315b3de7dc653b2654e3c1f9b6",
+    "training/profiles/rl-encoder-20261020/assumptions.json": "653a75c0c380cc388622d470a4be78a6c51877491f186e0031f4b0722511c92a",
+    "training/profiles/rl-encoder-20261020/bundle.json": "45b51937e66263ca6e3fcecb2b3f2cbed09473532042a807bbe0b1813c3eec37",
+    "training/profiles/rl-encoder-20261020/executor-parameters.json": "6bc8d71ea43136f44aceffc1f59b065fe6dcc85440c9ee853ffbad5a94684a60",
+    "training/profiles/rl-encoder-20261020/frozen-candidate.json": "2874d85349664109404ea0066fb4037fec568f422cdbbc740f57a55790db1b59",
+    "training/profiles/rl-encoder-20261020/model.json": "e9e9ecb005b443e31a5f4945f3a1bf18a085855e3fd25b0fe9b6c146c9eb4b26",
+    "training/profiles/rl-encoder-20261020/observation-config.json": "3e7599f4dbf6663589a9246c6f05a5bd75bde58c24f034d1d7dba220cb5f670a",
+    "training/profiles/rl-encoder-20261020/prior-parameters.json": "b9b12e9af2873e53f9bbe2d7301d3f6ea053151e813546f0d4d1e055429e5325",
+    "training/profiles/rl-encoder-20261020/provenance.json": "be4b475de2bca7e32612792863b3fdd0c63415cf4cc15e4f573d8d9789826849"
+  }
+}

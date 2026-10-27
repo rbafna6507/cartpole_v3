@@ -1,0 +1,18 @@
+{
+  "approach_angle_rad": 0.800000012,
+  "capture_angle_rad": 0.25,
+  "capture_rate_rad_s": 3.0,
+  "effective_length_m": 0.123999998,
+  "energy_gain": 4.0,
+  "kick_acceleration_m_s2": 1.0,
+  "kick_duration_s": 0.12,
+  "max_acceleration_m_s2": 25.0,
+  "omega_gain": 2.391379796199559,
+  "phase_softness": 2.0,
+  "position_gain": 3.4128439816513763,
+  "release_angle_rad": 0.800000012,
+  "swing_position_gain": 40.0,
+  "swing_velocity_gain": 2.0,
+  "theta_gain": 22.02559265311508,
+  "velocity_gain": 3.1853211041467877
+}

@@ -1,0 +1,190 @@
+{
+  "accepted": false,
+  "reasons": [
+    "angle zero bias diagnostic exceeds threshold; independently establish calibration/offset",
+    "effective length outside prior bounds",
+    "input gain outside prior bounds",
+    "angular damping outside nonnegative bounds",
+    "training integral residual exceeds threshold",
+    "held-out prediction or integral residual exceeds threshold/coverage"
+  ],
+  "angle_offset": {
+    "value_rad": 0.0,
+    "diagnostic_only": false,
+    "establishment": "Operator supplied; this tool does not establish a global angle calibration.",
+    "historical_fitted_phase": "A frozen historical fitted phase is diagnostic only; never calibration proof."
+  },
+  "input_semantics": {
+    "angle": "direct raw magnetic theta; filtered omega omitted",
+    "acceleration": "sampled MCU governor acceleration command; not demand or physical acceleration",
+    "physical_cart_acceleration_measured": false,
+    "metric_cart_gain_established": false,
+    "gain_interpretation": "Command-domain effective input gain includes actuator, estimation and clock effects."
+  },
+  "limitations": [
+    "No interpolation, regression window or prediction crosses source identity, invalid row or gap.",
+    "Batching increases independent window count without increasing each pulse duration or relaxing fit gates.",
+    "A statistical pass is conditional commanded-input evidence; physical cart motion and global angle calibration remain unverified.",
+    "Nonzero angle-offset results are labeled diagnostic; independently establish their calibration before model use."
+  ],
+  "recommended_for_hardware_rl": false,
+  "model_installed": false,
+  "fit": {
+    "accepted": false,
+    "parameters": {
+      "effective_length_m": 2.741457583751791,
+      "input_gain": 24.61250111479926,
+      "angular_damping_per_s": -4.174919693667564,
+      "damping_ratio": -1.103505220582319,
+      "delay_s": 0.0
+    },
+    "uncertainty": {
+      "coefficient_standard_errors": {
+        "alpha_per_s2": 2.808791919203169,
+        "gamma_per_s": 1.1561618480003597,
+        "beta_per_m": 1.5448334380544804
+      },
+      "delay_profile_near_optimal_s": [
+        0.0,
+        0.005
+      ],
+      "method": "OLS conditional covariance on nonoverlapping weak-form windows",
+      "effective_length_standard_error_m": 2.1518580602538404
+    },
+    "training": {
+      "segment_count": 4,
+      "sample_count": 1473,
+      "delay_profile": [
+        {
+          "delay_s": 0.0,
+          "mean_squared_integral_residual": 0.0004770928144731729
+        },
+        {
+          "delay_s": 0.005,
+          "mean_squared_integral_residual": 0.0004910439989557295
+        },
+        {
+          "delay_s": 0.01,
+          "mean_squared_integral_residual": 0.0005084370261452127
+        },
+        {
+          "delay_s": 0.015,
+          "mean_squared_integral_residual": 0.000531284910306218
+        },
+        {
+          "delay_s": 0.02,
+          "mean_squared_integral_residual": 0.00056050951299066
+        },
+        {
+          "delay_s": 0.025,
+          "mean_squared_integral_residual": 0.0005986371023575266
+        },
+        {
+          "delay_s": 0.03,
+          "mean_squared_integral_residual": 0.0006473289301470147
+        },
+        {
+          "delay_s": 0.035,
+          "mean_squared_integral_residual": 0.0007073320131774884
+        },
+        {
+          "delay_s": 0.04,
+          "mean_squared_integral_residual": 0.0007769119750512459
+        },
+        {
+          "delay_s": 0.045,
+          "mean_squared_integral_residual": 0.0008452438297491385
+        },
+        {
+          "delay_s": 0.05,
+          "mean_squared_integral_residual": 0.0008969310726691631
+        },
+        {
+          "delay_s": 0.055,
+          "mean_squared_integral_residual": 0.000912250694755776
+        },
+        {
+          "delay_s": 0.06,
+          "mean_squared_integral_residual": 0.0008865790332521948
+        },
+        {
+          "delay_s": 0.065,
+          "mean_squared_integral_residual": 0.0008332634388283891
+        },
+        {
+          "delay_s": 0.07,
+          "mean_squared_integral_residual": 0.0007673007936612434
+        },
+        {
+          "delay_s": 0.075,
+          "mean_squared_integral_residual": 0.0007058829647142346
+        },
+        {
+          "delay_s": 0.08,
+          "mean_squared_integral_residual": 0.0006506360720360283
+        },
+        {
+          "delay_s": 0.085,
+          "mean_squared_integral_residual": 0.0006065233329457306
+        },
+        {
+          "delay_s": 0.09,
+          "mean_squared_integral_residual": 0.000569395870824868
+        },
+        {
+          "delay_s": 0.095,
+          "mean_squared_integral_residual": 0.0005402349032848202
+        },
+        {
+          "delay_s": 0.1,
+          "mean_squared_integral_residual": 0.0005156829144248365
+        }
+      ],
+      "angle_zero_diagnostic": {
+        "rank": 5,
+        "condition": 8.850454972001726,
+        "identifiable": true,
+        "gravity_offset_rad": -0.10507440699669382,
+        "input_offset_rad": 1.0619943881986105
+      },
+      "window_count": 40,
+      "rank": 3,
+      "condition": 1.9205674542950482,
+      "integral_nrmse": 0.5116802448538146,
+      "angle_span_rad": 0.36815530717958644,
+      "acceleration_std_m_s2": 0.3353512344194643
+    },
+    "validation": {
+      "prediction_windows": 14,
+      "prediction_samples": 700,
+      "prediction_rmse_rad": 0.6455186651539409,
+      "prediction_p95_rad": 1.4813362305861872,
+      "horizon_s": 0.5,
+      "segment_count": 2,
+      "integral_nrmse": 0.7079115137015374
+    },
+    "reasons": [
+      "angle zero bias diagnostic exceeds threshold; independently establish calibration/offset",
+      "effective length outside prior bounds",
+      "input gain outside prior bounds",
+      "angular damping outside nonnegative bounds",
+      "training integral residual exceeds threshold",
+      "held-out prediction or integral residual exceeds threshold/coverage"
+    ],
+    "assumptions": [
+      "upright theta=0; positive theta follows cart +x rotation",
+      "rigid planar pendulum; constant effective length; linear viscous angular damping",
+      "sampling captures less than pi angular motion per valid interval",
+      "acceleration and angle share a calibrated monotonic clock",
+      "commanded input gain/delay include actuator, estimator and clock effects",
+      "uncertainty is conditional regression uncertainty; excludes calibration, correlated sensor noise and model bias"
+    ],
+    "unidentifiable": [
+      "cart_mass_kg",
+      "pole_mass_kg",
+      "force_gain_N_per_command",
+      "hinge_damping_N_m_s"
+    ],
+    "recommended_model": null
+  }
+}

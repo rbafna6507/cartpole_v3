@@ -1,0 +1,27 @@
+{
+  "simulation_config": {
+    "physics_dt_ns": 1000000,
+    "control_steps": 10,
+    "max_steps": 2500,
+    "rail_half_m": 0.308962494,
+    "effective_length_m": 0.124,
+    "cart_mass_kg": 0.35,
+    "pole_mass_kg": 0.02275,
+    "cart_damping": 0.05,
+    "hinge_damping": 0.0001,
+    "max_force_n": 20.0,
+    "max_acceleration_m_s2": 25.0,
+    "max_action_ttl_ns": 50000000,
+    "hinge_coulomb_friction_nm": 0.0,
+    "hinge_friction_velocity_scale_rad_s": 0.05
+  },
+  "rationale": "Development training: use measured rail and recorded executor snapshot; .35 kg cart, .02275 kg equivalent pole mass, .05 N s/m cart damping and 20 N force ceiling remain explicit assumptions. Replace passive length/damping/friction using the frozen batch-6 candidate. No claim of measured force authority, actuator tracking, global encoder mapping or hardware transfer.",
+  "executor_snapshot": {
+    "path": "evidence/system-id-20261017/raw-final-inspection/final-inspect-01/report.json",
+    "sha256": "3f719ac7aa1e1690d8f072a10e7e4af9637c8bc97491458ce34eeb96f1933693",
+    "firmware": "executor-v6-measuredrail",
+    "home_epoch": 15,
+    "source_status": "Recorded stopped inspection from 2026-10-17; not a live readback"
+  },
+  "observation_assumptions": "Raw 4096-count encoder plus the recorded bw=6 observer. 3 ms telemetry and 1 ms command delays are declared engineering assumptions, not identified latency distributions. No extra Gaussian noise beyond quantization and no dropout in this baseline; stress these assumptions before hardware use."
+}

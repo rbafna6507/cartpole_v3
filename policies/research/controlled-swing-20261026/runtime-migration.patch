@@ -1,0 +1,44 @@
+--- frozen/rig/neural_runner.py
++++ current/rig/neural_runner.py
+@@ -192,7 +192,21 @@
+     'phase_soft', 'approach_v', 'catch_v', 'approach_angle', 'catch_da',
+     'catch_a', 'catch_r', 'giveup',
+ })
++from contextlib import contextmanager
++from contextvars import ContextVar
++
+ HOME_RAIL_REPEATABILITY_M = .001
++_rail_tolerance_mm = ContextVar('console_policy_rail_tolerance_mm', default=1.)
++
++@contextmanager
++def rail_compatibility_tolerance(millimeters):
++    """Trusted, scoped training-geometry allowance; never changes live limits."""
++    if type(millimeters) not in (int,float) or not math.isfinite(millimeters) or not 1<=millimeters<=20:
++        raise ValidationError('rail tolerance must be finite and within 1..20 mm')
++    token=_rail_tolerance_mm.set(float(millimeters))
++    try:yield
++    finally:_rail_tolerance_mm.reset(token)
++
+ 
+ 
+ def _live_rail_compatibility(rig, values, expected, info):
+@@ -222,7 +236,8 @@
+     # above and the trained/live host-limit intersection remain authoritative.
+     # Two binary32 ULPs cover independently rounded geometry/arithmetic.
+     step_m = 1./float32(26666.6666667)
+-    max_delta = HOME_RAIL_REPEATABILITY_M+2*binary32_ulp
++    tolerance_mm = _rail_tolerance_mm.get()
++    max_delta = tolerance_mm/1000+2*binary32_ulp
+     delta = live-trained
+     if ((info.firmware not in TUNABLE_FIRMWARES and live != trained) or abs(delta) > max_delta):
+         raise ValidationError('live executor differs from actor snapshot: rail '
+@@ -232,7 +247,8 @@
+         delta_m=delta, max_delta_m=max_delta, counted_step_m=step_m,
+         home_epoch=info.home_epoch, measured_span_steps=info.measured_span_steps,
+         info_rail_m=info.rail_half_m, live_rail_cap_m=cap,
+-        basis='1 mm half-length compatibility allowance plus two binary32 ULPs; live measured cap remains strict')
++        console_override=tolerance_mm != 1.,
++        basis=f'{tolerance_mm:g} mm half-length compatibility allowance plus two binary32 ULPs; live measured cap remains strict')
+ 
+ 
+ def validate_live_executor(rig, policy, *, require_rate=True):

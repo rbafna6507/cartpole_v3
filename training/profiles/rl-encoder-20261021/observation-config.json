@@ -1,0 +1,19 @@
+{
+  "angle_frame_id": "encoder-zero",
+  "angle_noise_std": 0.001,
+  "angle_source": "raw",
+  "command_delay_steps": 1,
+  "dropout_probability": 0.0,
+  "encoder_bias_rad": 0.0,
+  "encoder_cos_error_rad": 0.0,
+  "encoder_counts": 4096,
+  "encoder_sin_error_rad": 0.0,
+  "telemetry_delay_steps": 3,
+  "vision_angle_noise_std": 0.003,
+  "vision_angle_quantum_rad": 0.001,
+  "vision_dropout_probability": 0.0,
+  "vision_frame_period_ns": 12500000,
+  "vision_latency_ns": 20000000,
+  "vision_max_age_ns": 150000000,
+  "vision_warmup_steps": 500
+}

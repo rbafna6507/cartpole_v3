@@ -1,0 +1,146 @@
+{
+  "schema_version": 1,
+  "curated_date": "2026-10-27",
+  "campaign_date": "2026-10-17",
+  "source_records": [
+    {
+      "source_repository": "cartpole_v2",
+      "source_path": "evidence/system-id-20261017/raw-pulse-training/pulse-pos10-short-01/columns.json.gz",
+      "source_sha256": "67c4b9dcae7d2a4871c385980045e74c29572bf855cf2efd36097d8a4781f1a9",
+      "outputs": [
+        "data/pulse-pos10-short-01.csv"
+      ],
+      "transformation": "Only numeric STATE channels; unwrapped MCU time relative to first row; no filtering or resampling. Host metadata, camera URLs and identifiers omitted."
+    },
+    {
+      "source_repository": "cartpole_v2",
+      "source_path": "evidence/system-id-20261017/raw-pulse-training/pulse-neg10-short-01/columns.json.gz",
+      "source_sha256": "291d2c24f96e3962e0f34a9aa4bd0ed39cb54606230796994123cb7f49911022",
+      "outputs": [
+        "data/pulse-neg10-short-01.csv"
+      ],
+      "transformation": "Only numeric STATE channels; unwrapped MCU time relative to first row; no filtering or resampling. Host metadata, camera URLs and identifiers omitted."
+    },
+    {
+      "source_repository": "cartpole_v2",
+      "source_path": "evidence/system-id-20261017/raw-pulse-training/pulse-pos20-short-01/columns.json.gz",
+      "source_sha256": "daf0d25d9c51ef9b58ed27fa7b1a57f838d79dea30454a084a8282664b073666",
+      "outputs": [
+        "data/pulse-pos20-short-01.csv"
+      ],
+      "transformation": "Only numeric STATE channels; unwrapped MCU time relative to first row; no filtering or resampling. Host metadata, camera URLs and identifiers omitted."
+    },
+    {
+      "source_repository": "cartpole_v2",
+      "source_path": "evidence/system-id-20261017/raw-pulse-training/pulse-neg20-short-01/columns.json.gz",
+      "source_sha256": "504ec15556ceb8ec6817b06193062dbda5a59dbf32f607e0340dae7ce877c5be",
+      "outputs": [
+        "data/pulse-neg20-short-01.csv"
+      ],
+      "transformation": "Only numeric STATE channels; unwrapped MCU time relative to first row; no filtering or resampling. Host metadata, camera URLs and identifiers omitted."
+    },
+    {
+      "source_repository": "cartpole_v2",
+      "source_path": "evidence/system-id-20261017/raw-pulse-validation/pulse-pos30-validation-01/columns.json.gz",
+      "source_sha256": "6e38771663d476cef70d4d6e1ee92fc68fee18cf2c84ff649c791419011524c8",
+      "outputs": [
+        "data/pulse-pos30-validation-01.csv"
+      ],
+      "transformation": "Only numeric STATE channels; unwrapped MCU time relative to first row; no filtering or resampling. Host metadata, camera URLs and identifiers omitted."
+    },
+    {
+      "source_repository": "cartpole_v2",
+      "source_path": "evidence/system-id-20261017/raw-pulse-validation/pulse-neg30-validation-01/columns.json.gz",
+      "source_sha256": "11997bf41e766f84f6ebed013f2399e10f9688a86c643acb80eb9ce0cb5ea738",
+      "outputs": [
+        "data/pulse-neg30-validation-01.csv"
+      ],
+      "transformation": "Only numeric STATE channels; unwrapped MCU time relative to first row; no filtering or resampling. Host metadata, camera URLs and identifiers omitted."
+    },
+    {
+      "source_repository": "cartpole_v2",
+      "source_path": "evidence/system-id-20261017/analysis/manual-repeatability/assessment.json",
+      "source_sha256": "2a803bd6e0555d7a1714f99571ec6fa33bd85ffbf23d6d2a819c034267b2ecc7",
+      "outputs": [
+        "data/manual-left_nominal30.csv",
+        "data/manual-right_nominal60.csv",
+        "data/manual-left_nominal60.csv",
+        "fits/passive-frozen.json"
+      ],
+      "transformation": "Allowlisted numeric predictions, frozen parameters, scores and caveats; no retuning. Original continuous-rollout times retained."
+    },
+    {
+      "source_repository": "cartpole_v2",
+      "source_path": "evidence/system-id-20261017/analysis/pulse-batch-primary-zero-offset.json",
+      "source_sha256": "2aa72ca8f21c1a6f85c24d972bf57f42ec86ced32781185f3c2f222e8551664f",
+      "outputs": [
+        "fits/driven-primary-zero-offset.json"
+      ],
+      "transformation": "Allowlisted fit metrics and explicit rejection/uncertainty; source environment metadata omitted."
+    },
+    {
+      "source_repository": "cartpole_v2",
+      "source_path": "evidence/system-id-20261017/analysis/pulse-batch-secondary-historic-offset.json",
+      "source_sha256": "2e643e93c94af8cf39a1432972f41b4734568bb1aab080f38703adba189bc621",
+      "outputs": [
+        "fits/driven-secondary-historic-offset.json"
+      ],
+      "transformation": "Allowlisted fit metrics and explicit rejection/uncertainty; source environment metadata omitted."
+    },
+    {
+      "source_repository": "cartpole_v2",
+      "source_path": "firmware/teensy_executor/teensy_executor.ino",
+      "source_sha256": "df21ecdc8643d77b77b59b96a2a0df7a987d6ffc44f1dc489f5b693a66554229",
+      "outputs": [
+        "sources/hardware-excerpts.md"
+      ],
+      "transformation": "Lines 27\u201342; historical source excerpt."
+    },
+    {
+      "source_repository": "cartpole_v2",
+      "source_path": "firmware/teensy_executor/teensy_executor.ino",
+      "source_sha256": "df21ecdc8643d77b77b59b96a2a0df7a987d6ffc44f1dc489f5b693a66554229",
+      "outputs": [
+        "sources/hardware-excerpts.md"
+      ],
+      "transformation": "Lines 256\u2013263; historical source excerpt."
+    },
+    {
+      "source_repository": "cartpole_v2",
+      "source_path": "firmware/teensy_executor/cart_mechanics.h",
+      "source_sha256": "04d5d54363baaaeb0e1df9827e06ef3c2a4be3fcb9b967e8a2c48d6b94e442b6",
+      "outputs": [
+        "sources/hardware-excerpts.md"
+      ],
+      "transformation": "Lines 1\u201323; historical source excerpt."
+    },
+    {
+      "source_repository": "cartpole_v2",
+      "source_path": "docs/pcb-switches.md",
+      "source_sha256": "b3293e1e1fd644a1726c6b5457507f41b3fa35009d9f0778f750ce33023694c7",
+      "outputs": [
+        "sources/hardware-excerpts.md"
+      ],
+      "transformation": "Lines 1\u201335; historical source excerpt."
+    },
+    {
+      "source_repository": "cartpole_v2",
+      "source_path": "docs/VERTICAL_CONTROL.md",
+      "source_sha256": "7a9b5a90d1143bf289c50c11ed5d24682a1ef7436056e0bfa4172950ebd59dd5",
+      "outputs": [
+        "sources/hardware-excerpts.md"
+      ],
+      "transformation": "Lines 1\u201340; historical source excerpt."
+    },
+    {
+      "source_repository": "cartpole_v2",
+      "source_path": "docs/VERTICAL_COMMISSIONING.md",
+      "source_sha256": "401292a49c369fcce6b53ce5fb9f7a2b149a6cf55c89b6fe6094419e44b66c07",
+      "outputs": [
+        "sources/hardware-excerpts.md"
+      ],
+      "transformation": "Lines 31\u201338; source excerpt."
+    }
+  ],
+  "privacy": "Numeric scalar traces, analysis summaries and selected source excerpts only. No raw private logs, hostnames, URLs, serial IDs, camera frames or deployment paths."
+}

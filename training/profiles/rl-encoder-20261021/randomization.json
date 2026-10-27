@@ -1,0 +1,46 @@
+{
+  "encoder": {
+    "encoder_bias_rad": [
+      -0.017453292519943295,
+      0.017453292519943295
+    ],
+    "encoder_cos_error_rad": [
+      -0.08726646259971647,
+      0.08726646259971647
+    ],
+    "encoder_sin_error_rad": [
+      -0.06981317007977318,
+      0.06981317007977318
+    ]
+  },
+  "observation": {
+    "angle_noise_std": [
+      0.0,
+      0.003
+    ],
+    "command_delay_steps": [
+      0,
+      3
+    ],
+    "telemetry_delay_steps": [
+      0,
+      5
+    ]
+  },
+  "plant": {
+    "angular_damping_scale": [
+      0.8,
+      1.2
+    ],
+    "coulomb_friction_scale": [
+      0.8,
+      1.2
+    ],
+    "effective_length_scale": [
+      0.95,
+      1.05
+    ]
+  },
+  "rationale": "Engineering robustness assumptions, not measured uncertainties or a fitted posterior. Encoder bias +/-1 degree, sine +/-4 degrees and cosine +/-5 degrees are deliberately chosen engineering coverage, not a calibrated sensor law or confidence interval. The cosine term vanishes at upright and permits a hanging/upright discrepancy; the rejected full-angle curve is not applied.",
+  "schema": "cartpole-training-randomization-v1"
+}

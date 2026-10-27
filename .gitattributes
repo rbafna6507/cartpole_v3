@@ -1,0 +1,7 @@
+# Runtime/source and evidence digests require identical checkout bytes on every OS.
+* -text
+# CSV evidence preserves original CRLF; patches/excerpts preserve source whitespace.
+*.csv -whitespace
+*.patch -whitespace
+system_id/sources/hardware-excerpts.md -whitespace
+src/cartpole_sdk/portal/observation_payload.py whitespace=-blank-at-eof

@@ -1,0 +1,34 @@
+{
+  "content_sha256": "37a9b9f00245ffb4784e11b4355206b0e49db784740f0e660c517cefe188484f",
+  "limitations": [
+    "Frozen batch-6 passive coefficients are retained from the source profile; no physical refit or fit acceptance is claimed.",
+    "Passive decays identify angular ratios. Cart/pole masses, cart damping and 20 N force authority remain assumptions.",
+    "Ideal acceleration-servo gain and tracking, physical delay, backlash, slip and missed steps remain unidentified.",
+    "The full-angle encoder curve failed held-out upright and freefall checks; no nominal global correction is applied.",
+    "Encoder, friction, length, noise and transport ranges are engineering stress coverage, not a statistical posterior.",
+    "The camera alone moved between native trial groups; their image-vertical angles are different view epochs, not evidence of encoder drift.",
+    "The readback was motor-disabled with fault 4 and invalid homing. Recorded settings do not establish a presently healthy or homed rig.",
+    "One-way transport delays are assumed. Host dispatch stalls and the 20 ms lease require separate fault evaluation.",
+    "Post-tightening friction, full-speed physical cart tracking, global swing-up/balance prediction and hardware transfer remain unqualified.",
+    "Smooth dry friction requires MujocoBackend; generated MJCF alone omits its applied torque."
+  ],
+  "rationale": "Retain the preserved passive plant; refresh only the recorded rail and executor settings. Nominal encoder correction remains zero. Source bytes and evidence limits are pinned in provenance.json with canonical digest e18db1e363f9e35f82c2b968e8890134a5ed8b084de13618694d48a71879b034.",
+  "schema": "cartpole-development-model-v1",
+  "simulation_config": {
+    "cart_damping": 0.05,
+    "cart_mass_kg": 0.35,
+    "control_steps": 10,
+    "effective_length_m": 0.16030387335574306,
+    "hinge_coulomb_friction_nm": 0.0007133292581428023,
+    "hinge_damping": 3.0218604984532184e-06,
+    "hinge_friction_velocity_scale_rad_s": 0.05,
+    "max_acceleration_m_s2": 25.0,
+    "max_action_ttl_ns": 50000000,
+    "max_force_n": 20.0,
+    "max_steps": 2500,
+    "physics_dt_ns": 1000000,
+    "pole_mass_kg": 0.02275,
+    "rail_half_m": 0.309074998
+  },
+  "status": "DEVELOPMENT_ONLY"
+}

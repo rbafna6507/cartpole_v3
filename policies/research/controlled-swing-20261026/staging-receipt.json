@@ -1,0 +1,21 @@
+{
+  "active_policy_changed": false,
+  "destination": "Jetson inactive candidates/controlled-swing-20261026",
+  "files_verified": {
+    "README.md": "97ffccf8f7cfc9cca56baa21635844365fb1fa346d667dd55a8c60b3cb980590",
+    "runtime-migration.patch": "9d7b6faa5ff2bbd5709bedbe28a619c12b39e2de9bb75eeee25adeb00fd42dbf",
+    "step-000025600/actor.json": "514d6c36415cdb8be1c6c8fbc7b3e388258a3ce047e4ef62c8cc5b6324fc49fc",
+    "step-000025600/actor.original.json": "9b97f9718f103afbd0e0670a196bedf6e604255775457c97bdb66cfe671f9bbd",
+    "step-000025600/receipt.json": "fe043c3dd79ab666b78f4b8817920cbf59d40f43827111912dae2da2f3e9163e",
+    "step-001024000/actor.json": "e9849d4f2e37afdafd5d7351960f2779774f9e40acfa4cd23f8bc482d277af18",
+    "step-001024000/actor.original.json": "5907004c1cb799c753ef56b4ddc90c49553d21d8632e4501d4fc5ddc82e1b156",
+    "step-001024000/receipt.json": "ee800cafdf1695dc3aaf78f34ef57557db4a94ad0cd63c893442a7c4f3773211",
+    "summary.json": "48940a992a0b039a0023c2d04f69734a3eff15ed988096f1ebe427215b7cc6d4"
+  },
+  "hardware_accepted": false,
+  "rig_motion": false,
+  "schema": "research-staging-receipt-v1",
+  "scope": "Copy and hash verification only; runtime loading on Jetson not attempted",
+  "services_changed": false,
+  "sha256_match": true
+}

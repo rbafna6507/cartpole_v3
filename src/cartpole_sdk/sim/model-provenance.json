@@ -1,0 +1,138 @@
+{
+  "archived_sources": [
+    {
+      "path": "archive/good_balancing_jetson/settings.json",
+      "sha256": "fa164ed119b26d49d123a28804c444ce12a05fa65435d4d6945099cbd13f6c50"
+    },
+    {
+      "path": "archive/good_balancing_jetson/teensy_firmware/teensy_swingup/teensy_swingup.ino",
+      "sha256": "a2c27e9b4a5aa70bc589b32eaacdd0a0c4b5003dcde47f48cd0e86eaee3e5d52"
+    }
+  ],
+  "default_configuration": {
+    "cart_damping": 0.05,
+    "cart_mass_kg": 0.35,
+    "control_steps": 1,
+    "effective_length_m": 0.124,
+    "hinge_damping": 0.0001,
+    "max_acceleration_m_s2": 25.0,
+    "max_action_ttl_ns": 1000000000,
+    "max_force_n": 20.0,
+    "max_steps": 10000,
+    "physics_dt_ns": 1000000,
+    "pole_mass_kg": 0.02275,
+    "rail_half_m": 0.26
+  },
+  "default_model_sha256": "ef1c567d69d201548b915b57552cd4e45536ad0a5b291eaeb218f993bfadf7e6",
+  "default_sensors": {
+    "angle_noise_std": 0.0,
+    "angular_velocity_noise_std": 0.0,
+    "delay_steps": 0,
+    "dropout_probability": 0.0,
+    "frame_id": "sim:upright+x",
+    "position_noise_std": 0.0,
+    "sample_every_steps": 1,
+    "velocity_noise_std": 0.0
+  },
+  "dynamics": {
+    "cart_force": "M_cc * requested_cart_acceleration + M_ch * hinge_acceleration + bias_c - passive_c",
+    "diagnostics": "requested/applied force and achieved acceleration describe final completed physics substep; truth is post-step",
+    "equation": "M qacc + bias = passive + applied, no constraints or contacts",
+    "expiry": "checked at beginning of every physics tick; no active demand -> zero requested acceleration, possibly nonzero force",
+    "force_clipping": "cart generalized force only, [-max_force_n,+max_force_n]; hinge applied force remains zero",
+    "hinge_acceleration": "-(M_hc * requested_cart_acceleration + bias_h - passive_h) / M_hh",
+    "integration": "MuJoCo Euler with implicit damping disabled; physical passive damping still included in force solve",
+    "numerical_failure": "MuJoCo autoreset disabled; bad qpos/qvel/qacc warning or nonfinite result raises RuntimeError, requires reset"
+  },
+  "gym": {
+    "action": "Box(1,) acceleration m/s^2, malformed/out-of-bound values rejected",
+    "default_control_steps": 10,
+    "observation": "Dict state=[x,v,sin(theta),cos(theta),omega], valid=5-element mask, age_s=effective age; unknown -1",
+    "render_modes": [],
+    "reward": "cos(true_theta) - (true_x/rail_half_m)^2 - .001*requested_acceleration^2, illustrative only",
+    "termination": "cart reaches either rail bound",
+    "truncation": "max_steps control intervals"
+  },
+  "limitations": [
+    "not calibrated or validated against hardware",
+    "no motor dynamics, backlash, rail contact or physical emergency stop model",
+    "no rendered UI",
+    "Gaussian noise is not a measured sensor-error model"
+  ],
+  "model": "uniform slender rod, cart +x slider, unactuated +y hinge, zero angle upright +z",
+  "official_api_references": [
+    "https://mujoco.readthedocs.io/en/latest/computation/index.html",
+    "https://mujoco.readthedocs.io/en/latest/APIreference/APIfunctions.html#mj-fullm",
+    "https://mujoco.readthedocs.io/en/latest/XMLreference.html#option-flag",
+    "https://gymnasium.farama.org/introduction/create_custom_env/"
+  ],
+  "parameters": {
+    "cart_damping": {
+      "basis": "assumption",
+      "unit": "N s/m",
+      "value": 0.05
+    },
+    "cart_mass_kg": {
+      "basis": "assumption, unmeasured",
+      "value": 0.35
+    },
+    "cart_rotational_inertia_kg_m2": {
+      "basis": "arbitrary positive inertia, no cart rotation DOFs",
+      "value": [
+        0.001,
+        0.001,
+        0.001
+      ]
+    },
+    "effective_length_m": {
+      "basis": "saved settings leff; archived comment describes prior low-angle cycles, not current model validation",
+      "value": 0.124
+    },
+    "gravity_m_s2": {
+      "basis": "standard illustrative gravity",
+      "value": 9.81
+    },
+    "hinge_damping": {
+      "basis": "assumption",
+      "unit": "N m s/rad",
+      "value": 0.0001
+    },
+    "max_force_n": {
+      "basis": "assumed symmetric cart-force limit, not measured motor authority",
+      "value": 20.0
+    },
+    "pole_axial_inertia": {
+      "basis": "transverse inertia times 1e-6 to satisfy positive inertia; no effect on sole +y hinge"
+    },
+    "pole_mass_kg": {
+      "basis": "archived comment 11.05 g arm plus two 5.85 g weights, unconfirmed for actual rig",
+      "value": 0.02275
+    },
+    "rail_half_m": {
+      "basis": "saved settings rail half-length",
+      "value": 0.26
+    },
+    "rod_length_m": {
+      "basis": "surrogate derivation l=1.5*L_eff; not actual geometric arm length",
+      "value": 0.186
+    }
+  },
+  "schema_version": 1,
+  "sensors": {
+    "clock": "integer physics tick clock; t=0 acquisition included",
+    "delay": "physics tick queue, initial unknown until first delivery",
+    "dropout": "one seeded Bernoulli draw per acquisition shared by all channels, explicit invalid values None",
+    "held_samples": "retain original acquisition, effective and receipt timestamps; observation availability advances",
+    "kind": "measured",
+    "method": "simulated_sensor",
+    "noise": "independent Gaussian channel noise with configured standard deviations; angle wrapped atan2(sin,cos)",
+    "source": "simulation"
+  },
+  "status": "provisional unvalidated surrogate; no measured full rigid-body or motor identification",
+  "verified_versions": {
+    "gymnasium": "1.4.0",
+    "mujoco": "3.15.0",
+    "numpy": "2.4.6",
+    "python": "3.11.7"
+  }
+}

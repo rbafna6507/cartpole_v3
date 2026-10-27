@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cartpole vision</title>
+<style>
+:root{--ink:#203648;--paper:#edf2f5;--panel:#fff;--blue:#225db0;--green:#20784e;--amber:#925511;--line:#cbd6df}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:"Avenir Next",Avenir,"Segoe UI",sans-serif}header{padding:20px 30px;background:var(--ink);color:white;display:flex;align-items:center;justify-content:space-between;gap:20px}h1{font-size:24px;margin:0;font-weight:600}header p{margin:4px 0 0;color:#c3d6e4;font-size:14px}main{max-width:1560px;margin:auto;padding:22px 30px;display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:24px}h2{font-size:18px;margin:0 0 14px}p{line-height:1.5;font-size:14px}button,input{font:inherit}button{cursor:pointer;background:white;border:1px solid #9baebd;border-radius:5px;padding:9px 12px;color:var(--ink)}button:hover{background:#e5edf5}button.primary{background:var(--blue);color:white;border-color:var(--blue)}button:focus-visible,input:focus-visible{outline:3px solid #ecaf42;outline-offset:2px}.toolbar{display:flex;gap:8px;align-items:center;margin:10px 0;flex-wrap:wrap}.camera{position:relative;background:#263440;min-height:220px;aspect-ratio:8/5;overflow:hidden}.camera img{width:100%;height:100%;object-fit:contain;display:block}.camera #video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}.camera #selection{position:absolute;inset:0;width:100%;height:100%;touch-action:none}.caption{display:flex;justify-content:space-between;gap:12px;font-size:13px;color:#536877;padding:8px 0}.badge{border-radius:4px;padding:7px 10px;background:#e6edf2;font-size:13px}.good{background:#dbeee2;color:#195f3a}.bad{background:#fff0d6;color:#794409}.readouts{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin:14px 0}.readout{padding:13px 10px}.readout span{display:block;font-size:13px;color:#536877}.readout strong{display:block;font-size:25px;font-weight:500;font-variant-numeric:tabular-nums;margin:5px 0}.readout small{font-size:12px;color:#536877}.traces{background:white;padding:15px}.traces canvas{display:block;width:100%;height:180px}aside section{padding:18px 20px;background:white;margin-bottom:16px;border-radius:7px}aside p{color:#536877;margin:7px 0 13px}.stack{display:flex;gap:8px;flex-wrap:wrap}label{font-size:14px}input[type=number]{width:95px;padding:8px;border:1px solid #9baebd;border-radius:4px}.stat{display:flex;justify-content:space-between;padding:6px 0;font-size:14px}.stat b{font-variant-numeric:tabular-nums}#notice{min-height:40px;padding:8px 0;color:var(--amber);font-size:14px}details{font-size:13px}summary{cursor:pointer}pre{white-space:pre-wrap;overflow-wrap:anywhere;max-height:260px;overflow:auto;font-size:11px}a{color:var(--blue)}@media(max-width:1000px){main{grid-template-columns:1fr;padding:16px}aside{display:grid;grid-template-columns:1fr 1fr;gap:16px}aside section{margin:0}header{padding:18px}.readout strong{font-size:22px}}@media(max-width:600px){aside{grid-template-columns:1fr}.readouts{grid-template-columns:1fr 1fr}header{display:block}header .badge{display:inline-block;margin-top:12px}}
+</style></head>
+<body><header><div><h1>Cartpole vision</h1><p>Single-arm measurement bench</p></div><span class="badge" id="status">Connecting to camera</span></header>
+<main><div><div class="camera" id="cameraBox"><canvas id="video" width="960" height="600" aria-label="Live H.264 camera video"></canvas><canvas id="selection" aria-label="Camera selection area"></canvas></div>
+<div class="caption"><span>Camera video and tracking run independently</span><span id="previewLabel">Connecting video</span></div>
+<div class="toolbar"><button id="pick">Select pivot</button><button id="patch">Select cart patch</button><label>View <select id="videoMode"><option value="camera">Smooth camera</option><option value="tracked">Tracking overlay</option><option value="mask">Green mask</option></select></label><a href="/snapshot.png" target="_blank">Raw snapshot</a></div>
+<div id="notice" role="status" aria-live="polite">Detection starts automatically. Let the arm hang still, then set hanging zero.</div>
+<div class="readouts"><div class="readout"><span>Angle θ</span><strong id="theta">—</strong><small>degrees from upright</small></div><div class="readout"><span>Angular velocity</span><strong id="omega">—</strong><small>rad/s</small></div><div class="readout"><span>Cart position</span><strong id="x">—</strong><small>mm from A–B midpoint</small></div><div class="readout"><span>Cart velocity</span><strong id="v">—</strong><small>mm/s</small></div></div>
+<div class="traces"><h2>Recent measurements · legacy display comparison</h2>
+<div class="toolbar" aria-label="Angle traces">
+<label style="color:#225db0"><input id="traceVision" type="checkbox" checked> Vision</label>
+<label style="color:#c56a12"><input id="traceEncoder" type="checkbox" checked> Encoder</label>
+<label style="color:#8549b6"><input id="traceFused" type="checkbox" checked> Legacy display filter</label>
+</div>
+<p id="comparisonStatus" role="status">Waiting for console telemetry.</p><canvas id="anglePlot" aria-label="Vision, encoder and fused angle comparison" style="height:200px"></canvas><canvas id="cartPlot" aria-label="Recent cart position trace"></canvas><p>Blue and orange show sensor measurements; purple is the legacy display filter, not SDK control fusion. Each uses its own timestamps. Short gaps may have dashed connections; long outages remain blank. The traces share a 360° display branch without removing their relative offset. Hiding a trace does not disable that sensor.</p>
+<details><summary>Comparison timing and alignment</summary>
+<p id="comparisonTiming">Waiting for timing information.</p>
+<div class="toolbar"><label>Encoder direction <select id="encoderSign"><option value="1">Normal</option><option value="-1">Reversed</option></select></label>
+<label>Measured camera delay <input id="visionDelay" type="number" min="0" max="200" step="1" value="0"> ms</label><button id="applyComparison">Apply alignment</button></div>
+<p>Zero delay uses camera host-read time. Set a delay only after measuring it. These controls affect this display and filter. Sensor disagreement and filter uncertainty are not calibrated physical accuracy.</p></details></div>
+<div class="traces" style="margin-top:16px"><h2>SDK shadow observations</h2>
+<p id="sdkStatus" role="status">No SDK fusion configured.</p>
+<canvas id="sdkPlot" aria-label="Genuine SDK magnetic, vision and fused angle observations" style="height:200px"></canvas>
+<p>Blue: SDK vision. Orange: magnetic encoder. Purple: SDK fused angle. Source timestamps and frame identity come from the SDK. This observer does not command the rig.</p>
+<details><summary>SDK identity and diagnostics</summary><pre id="sdkDetails"></pre></details></div></div>
+<aside><section><h2>Acquisition</h2><div class="stat"><span>Requested</span><b id="requested">—</b></div><div class="stat"><span>Camera delivery</span><b id="delivery">—</b></div><div class="stat"><span>Processed frames</span><b id="tracking">—</b></div><div class="stat"><span>Video received / decoded</span><b id="videoRate">—</b></div><div class="stat"><span>Browser canvas updates</span><b id="paintRate">—</b></div><p>Canvas updates follow the display refresh rate. Tracking overlay uses only measured frames.</p><div class="stat"><span>Processing time</span><b id="cost">—</b></div><div class="stat"><span>Frame age</span><b id="age">—</b></div><div class="stat"><span>Skipped by tracker</span><b id="skipped">—</b></div><p id="rateNote">Waiting for a measured frame rate.</p><p id="recordingStatus" role="status">Waiting for recording status.</p></section>
+<section><h2>Measurement quality · last 2 s</h2>
+<div class="stat"><span>Valid angle</span><b id="angleRate">—</b></div>
+<div class="stat"><span>Valid angular velocity</span><b id="omegaRate">—</b></div>
+<div class="stat"><span>Angle coverage</span><b id="angleCoverage">—</b></div>
+<div class="stat"><span>Velocity coverage</span><b id="omegaCoverage">—</b></div>
+<div class="stat"><span>Processing · p95</span><b id="costP95">—</b></div>
+<div class="stat"><span>Host read → result · p95</span><b id="resultP95">—</b></div>
+<div class="stat"><span>Velocity filter delay</span><b id="omegaDelay">—</b></div>
+<div class="stat"><span>Host read → canvas</span><b id="canvasAge">—</b></div>
+<p id="velocityNote">Set hanging zero to measure angular velocity.</p>
+<p>Coverage includes frames skipped by tracking. Canvas age is a clock-probed estimate; ± gives timing uncertainty. Sensor exposure/readout and display scanout are excluded. Physical accuracy needs an independent reference.</p></section>
+<section><h2>Angle reference</h2><p>Hold the arm hanging down and still for 25 consecutive measurements.</p><button class="primary" id="home">Set hanging zero</button><p id="homeSamples">0 / 25 samples</p><p>Upright is 0°. Positive angles rotate upright toward image-right.</p></section>
+<section><h2>Cart reference</h2><p>Hold the cart still at A, record it, then move to B. Enter the measured distance between the two positions.</p><div class="stack"><button id="a">Record A</button><button id="b">Record B</button></div><p><label>Separation <input id="span" type="number" value="400" min="10" max="2000" step="1"> mm</label></p><p id="cartStatus">Not calibrated</p><p>A and B define scale and direction, not travel limits. Keep the camera fixed and square to the motion plane.</p></section>
+<section><h2>Tracking setup</h2><p>Automatic detection needs the green shaft and weighted end visible. A pivot selection narrows the search if another green object interferes.</p><p>For cart tracking through arm occlusion, select a textured patch on the rigid cart body. Exclude the swinging arm and stationary background.</p><button id="reset">Reset calibration and selections</button><details><summary>Diagnostics</summary><pre id="diagnostics"></pre></details></section></aside></main>
+<script src="/traces.js"></script>
+<script src="/comparison.js"></script>
+<script src="/sdk.js"></script>
+<script>
+const $=id=>document.getElementById(id);let mode=null,start=null,lastState=null;const traceHistory=new VisionTraces.HistoryStore();const c=$('selection'),ctx=c.getContext('2d');
+const comparisonHistory=new AngleComparison.ComparisonStore();
+fetch('/api/access').then(r=>r.json()).then(a=>{if(a.read_only){for(const id of ['pick','patch','home','a','b','reset','applyComparison','encoderSign','visionDelay','span'])$(id).disabled=true;$('notice').textContent='Remote observation view. Calibration changes require the Jetson loopback endpoint.';}}).catch(()=>{});
+let traceStorage=null;try{traceStorage=window.localStorage}catch(e){}
+const traceVisibility=new AngleComparison.Visibility(traceStorage);
+for(const [key,id] of [['vision','traceVision'],['encoder','traceEncoder'],['fused','traceFused']]){
+ $(id).checked=traceVisibility.enabled[key];
+ $(id).onchange=()=>{traceVisibility.set(key,$(id).checked);drawTraces()};
+}
+let alignmentInitialized=false;
+$('applyComparison').onclick=async()=>{
+ if(await post('/api/comparison',{encoder_sign:Number($('encoderSign').value),vision_delay_ms:Number($('visionDelay').value)}))
+  notice('Display alignment updated. Comparison history restarted.');
+};
+function comparison(s){
+ if(!s)return;
+ comparisonHistory.merge(s);
+ const q=s.status||{};
+ $('comparisonStatus').textContent='Legacy display filter: '+(q.source||'waiting')+' · Encoder '+number(q.encoder_hz,1,' Hz')+' · Vision '+number(q.vision_hz,1,' Hz')+
+  ' · Encoder − vision '+number(q.disagreement_deg,2,'°')+(q.receiver_error?' · '+q.receiver_error:'');
+ $('comparisonTiming').textContent='Encoder age '+number(q.encoder_age_s==null?null:q.encoder_age_s*1000,1,' ms')+
+  ' · Vision age '+number(q.vision_age_s==null?null:q.vision_age_s*1000,1,' ms')+
+  ' · Relative encoder offset '+number(q.bias==null?null:q.bias*180/Math.PI,2,'°')+
+  ' · Encoder health '+(q.encoder_health?.status||'unknown')+' (sampled at 10 Hz, age '+number(q.encoder_health?.age_s==null?null:q.encoder_health.age_s*1000,0,' ms')+') · Serial timing spread '+number(q.clock_jitter_ms,1,' ms')+'. '+(q.timing_note||'');
+ if(!alignmentInitialized){
+  $('encoderSign').value=q.encoder_sign||1;$('visionDelay').value=q.vision_delay_ms||0;alignmentInitialized=true;
+ }
+}
+function quality(s){
+ const q=s.measurement_quality?.recent||{};
+ $('angleRate').textContent=number(q.angle_fps,1,' FPS');
+ $('omegaRate').textContent=number(q.velocity_fps,1,' FPS');
+ $('angleCoverage').textContent=number(q.angle_coverage_calibrated==null?null:q.angle_coverage_calibrated*100,1,'%');
+ $('omegaCoverage').textContent=number(q.velocity_coverage_calibrated==null?null:q.velocity_coverage_calibrated*100,1,'%');
+ $('costP95').textContent=number(q.processing_ms?.p95,1,' ms');
+ $('resultP95').textContent=number(q.host_read_to_result_ms?.p95,1,' ms');
+ $('omegaDelay').textContent=number(s.omega_delay_s==null?null:s.omega_delay_s*1000,1,' ms');
+ $('velocityNote').textContent='Velocity: '+(s.velocity_status||'waiting')+'.';
+}
+function number(v,d=1,s=''){return v==null||!Number.isFinite(v)?'—':v.toFixed(d)+s}
+function notice(t){$('notice').textContent=t}
+async function post(path,body={}){try{let response=await fetch(path,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body),signal:AbortSignal.timeout(2500)});let data=await response.json();if(!response.ok)throw Error(data.error||'Request failed');notice('Saved.');return true}catch(e){notice(e.message);return false}}
+$('home').onclick=()=>post('/api/home');$('a').onclick=()=>post('/api/cart/a');$('b').onclick=()=>post('/api/cart/b',{span_mm:Number($('span').value)});$('reset').onclick=()=>post('/api/reset');
+$('pick').onclick=()=>{mode='pivot';notice('Click the pivot screw. This resets calibration.');c.style.cursor='crosshair'};
+$('patch').onclick=()=>{mode='patch';notice('Drag a rectangle around a textured part of the cart that does not rotate. Keep the cart still.');c.style.cursor='crosshair'};
+function position(event){let r=c.getBoundingClientRect();return {x:Math.max(0,Math.min(1,(event.clientX-r.left)/r.width)),y:Math.max(0,Math.min(1,(event.clientY-r.top)/r.height))}}
+c.onpointerdown=event=>{if(!mode)return;start=position(event);c.setPointerCapture(event.pointerId)};
+c.onpointermove=event=>{if(!start||mode!=='patch')return;let p=position(event);ctx.clearRect(0,0,c.width,c.height);ctx.strokeStyle='#ffcf63';ctx.lineWidth=3;ctx.strokeRect(start.x*c.width,start.y*c.height,(p.x-start.x)*c.width,(p.y-start.y)*c.height)};
+c.onpointerup=async event=>{if(!start)return;let end=position(event),begin=start;start=null;ctx.clearRect(0,0,c.width,c.height);if(mode==='pivot')await post('/api/select',end);else await post('/api/template',{rectangle:[Math.min(begin.x,end.x),Math.min(begin.y,end.y),Math.abs(end.x-begin.x),Math.abs(end.y-begin.y)]});mode=null;c.style.cursor='default'};
+function drawTraces(){
+ AngleComparison.draw($('anglePlot'),traceHistory.rows,comparisonHistory,traceVisibility.enabled);
+ VisionTraces.draw($('cartPlot'),traceHistory.rows,'cart_x_m',{label:'Cart position (mm)',color:'#20784e',scale:1000,emptyMessage:'Record cart references A and B to plot position'});
+}
+window.addEventListener('resize',drawTraces);
+function recordingStatus(s){
+ const log=s.telemetry_recording;
+ const errors=[s.recording_setup_error,log?.error,s.comparison?.status?.recording?.error,s.recording?.error].filter(Boolean);
+ const coverage=log?`Rolling telemetry: ${log.written_records} written, ${log.dropped_records} dropped, ${log.rotations} rotations.`:'Telemetry recording status unavailable.';
+ $('recordingStatus').textContent=coverage+(errors.length?' Recording issue: '+[...new Set(errors)].join('; '):'')+(s.recording?` Raw frames: ${s.recording.written_frames} written, ${s.recording.dropped_frames} dropped.`:'');
+}
+async function poll(){try{let res=await fetch('/api/state?'+new URLSearchParams({history:'1',history_limit:'120',after:traceHistory.after,epoch:traceHistory.epoch||'',comparison_after:comparisonHistory.after,comparison_epoch:comparisonHistory.epoch||''}),{cache:'no-store',signal:AbortSignal.timeout(1500)});if(!res.ok)throw Error('State request failed');let s=await res.json();lastState=s;recordingStatus(s);quality(s);comparison(s.comparison);if(s.video?.mode)$('videoMode').value=s.video.mode;$('status').textContent=s.worker_error||s.status||'Waiting';$('status').className='badge '+(!s.stale&&s.detected?'good':'bad');$('theta').textContent=number(s.theta_rad==null?null:s.theta_rad*180/Math.PI,2,'°');$('omega').textContent=number(s.omega_rad_s,3);$('x').textContent=number(s.cart_x_m==null?null:s.cart_x_m*1000,2);$('v').textContent=number(s.cart_v_m_s==null?null:s.cart_v_m_s*1000,1);let camera=s.camera||{};$('delivery').textContent=number(s.stale?null:camera.delivered_fps,2,' FPS');$('tracking').textContent=number(s.stale?null:s.tracking?.delivered_fps,2,' FPS');$('requested').textContent=(camera.settings?.requested_fps||80)+' FPS';$('cost').textContent=number(s.processing_ms,2,' ms');$('age').textContent=number(s.age_since_host_read_s==null?null:s.age_since_host_read_s*1000,1,' ms');$('skipped').textContent=s.skipped_camera_frames||0;$('rateNote').textContent=s.calibrated&&s.measurement_quality?.recent?.velocity_fps>=(camera.settings?.requested_fps||30)*.95?'Valid velocity rate meets the requested camera rate within 5%.':'Check valid measurement rates and coverage below; camera/processing FPS alone do not establish valid tracking.';$('homeSamples').textContent=s.home_samples+' / 25 samples'+(s.calibrated?' · calibrated':'');$('cartStatus').textContent=s.calibration?.cart_span_mm?'Calibrated: '+s.calibration.cart_span_mm+' mm'+(s.cart_extrapolated?' · outside reference span':''):(s.calibration?.cart_a_px?'A recorded; move to B.':'Not calibrated');$('diagnostics').textContent=JSON.stringify(s,null,2);traceHistory.merge(s.history);drawTraces();if(s.frame_width){$('cameraBox').style.aspectRatio=s.frame_width+'/'+s.frame_height;if(c.width!==s.frame_width||c.height!==s.frame_height){c.width=s.frame_width;c.height=s.frame_height}}}
+catch(e){$('comparisonStatus').textContent='Disconnected; comparison values are unavailable.';$('status').textContent='Connection lost';$('status').className='badge bad';$('rateNote').textContent='Disconnected. Frame rate and measurements are unavailable.';for(let id of ['theta','omega','x','v','delivery','tracking','angleRate','omegaRate','angleCoverage','omegaCoverage','costP95','resultP95','omegaDelay'])$(id).textContent='—'}finally{setTimeout(poll,200)}}
+poll();
+</script><script src="/timing.js"></script><script src="/video.js"></script></body></html>

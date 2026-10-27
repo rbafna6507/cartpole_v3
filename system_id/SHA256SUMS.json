@@ -1,0 +1,15 @@
+{
+  "data/manual-left_nominal30.csv": "2cd22d40bf790f48bfd45bf4f4d1d770d2ca5342e537c2b60e03d262b14cd197",
+  "data/manual-left_nominal60.csv": "a572cd1c56ac966c82f3ebd8b819af5b16d37f74725de584b8060cc4f106556a",
+  "data/manual-right_nominal60.csv": "64ab74a71a9c4df51de020298598aa1f9620073343c50f041d8a2407e719b67c",
+  "data/pulse-neg10-short-01.csv": "2ddca7e9f19bc4b11018d9f6f31bf2a8d376385c693204ef5e65f68a49ed86e6",
+  "data/pulse-neg20-short-01.csv": "5635aeb17b8b28d476fc8fd5034026ec2ef4fd3857b7ef0bab76d1ea28557c3f",
+  "data/pulse-neg30-validation-01.csv": "e27fcddb8f939936c6dcac96792aa568c8ec6315c76e09042bd7f31d2ced01b5",
+  "data/pulse-pos10-short-01.csv": "cd8a35b185d04fdbe5e6d4940e20d4400d3f4c6b72ba5b5105b20852cde97ca9",
+  "data/pulse-pos20-short-01.csv": "b5f7e00c25fa3308859e9dd3f28ff81e7f8dc76fe3ae740d37e02c5500eb30a3",
+  "data/pulse-pos30-validation-01.csv": "a3493322f3f5cf5f04bae938297cebb0cf0fe353d7295aa6950984b820729e60",
+  "fits/driven-primary-zero-offset.json": "454255643d8a74fb4fdb814f2fea7a006afda6d368077b01eef1bc18f1bb8938",
+  "fits/driven-secondary-historic-offset.json": "8026d8439a94825e9d23e2d6e66465ff6ae7b56585230cca0afc3077983a4bf6",
+  "fits/passive-frozen.json": "2dd774591be627e04052587c6f01bb5cd1003db4188ea52f6d17bcf7ff26e9e1",
+  "sources/hardware-excerpts.md": "207e8039929ab613e6699950fd0af0c3217376605a7f9e05176daa26b5a5f6ba"
+}

@@ -1,0 +1,8 @@
+{
+  "angle_source": "raw",
+  "encoder_counts": 4096,
+  "angle_noise_std": 0.0,
+  "telemetry_delay_steps": 3,
+  "command_delay_steps": 1,
+  "dropout_probability": 0.0
+}
